@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{node.title}} - De Appvocaat</title>
+    <meta property="og:image" content="../img/fb_logo.png"/>
+    <meta property="og:image:secure_url" content="../img/fb_logo.png" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="../css/online.css" rel="stylesheet" media="screen" />
+</head>
+<body>
+<div class="container-fluid" style="max-width:960px;margin:0 auto;">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="container-fluid">
+                <a class="brand" href="http://www.advocaten.nl"><img src="../img/fb_logo.png" /></a>
+            </div>
+            <div class="container-fluid">
+                <a href="https://play.google.com/store/apps/details?id=com.kikudjiro.advocaten">
+                    <img alt="Android app on Google Play"
+                         src="https://developer.android.com/images/brand/nl_app_rgb_wo_45.png" />
+                </a>
+            </div>
+        </div>
+        <div class="span9" style="padding-top: 20px;">
+            <h2>{{node.title}}</h2>
+            <ol class="breadcrumb">
+                {% if breadcrumbs %}
+                {% for bcId in breadcrumbs|keys %}
+                <li>
+                    <a href="{{ bcId }}">{{ breadcrumbs[bcId] }}</a>
+                    <span class="divider">/</span>
+                </li>
+                {% endfor %}
+                {% endif %}
+                <li class="active">{{ node.title }}</li>
+            </ol>
+            <div class="container-fluid">
+                {% block content %}
+                Content of the page...
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

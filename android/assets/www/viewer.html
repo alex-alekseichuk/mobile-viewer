@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no,width=device-width,height=device-height,target-densityDpi=device-dpi,initial-scale=1,maximum-scale=1,minimum-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.0.css" />
+        <link rel="stylesheet" type="text/css" href="css/viewer.css" />
+        <title>Advocaten.nl</title>
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="cordova-2.3.0.js"></script>
+        <script type="text/javascript" src="js/util.js"></script>
+        <script type="text/javascript" src="js/storage.js"></script>
+        <script type="text/javascript" src="js/viewer.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.3.0.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="splash">
+            <div class="splash">
+                <p>Voor alle oplossingen waar je geen advocaat voor nodig hebt</p>
+                <div id="deviceready" class="blink">
+                    <p class="alert" id="alert">laden...</p>
+                </div>
+            </div>
+        </div>
+        <div id="page0" data-role="page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" class="header">
+                <div data-role="header">
+                    <h1></h1>
+                </div>
+            </div>
+            <div data-role="content" class="content"></div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="listButtons" data-iconpos="left">
+                    <ul>
+                        <li><a href="#prev" data-icon="arrow-l" class="btnLeft"></a></li>
+                        <li><a href="#next" data-icon="arrow-r" class="btnRight"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="page1" data-role="page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" class="header">
+                <div data-role="header">
+                    <h1></h1>
+                </div>
+            </div>
+            <div data-role="content" class="content"></div>
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" class="listButtons" data-iconpos="left">
+                    <ul>
+                        <li><a href="#prev" data-icon="arrow-l" class="btnLeft"></a></li>
+                        <li><a href="#next" data-icon="arrow-r" class="btnRight"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="searchPage" data-role="page">
+            <div data-role="header" data-tap-toggle="false" class="header">
+                <div data-role="header">
+                    <h1>zoeken</h1>
+                </div>
+            </div>
+            <div data-role="content" class="content">
+                <div id="results"></div>
+            </div>
+        </div>
+        <div id="feedbackForm" data-role="page">
+            <div data-role="header" data-tap-toggle="false" class="header">
+                <div data-role="header">
+                    <h1>stel uw juridische vraag</h1>
+                </div>
+            </div>
+            <div data-role="content" class="content">
+                <div style="text-align: center;">
+                    binnen 3 dagen antwoord
+                </div>
+                <p>
+                    Geef een beknopte maar duidelijke omschrijving van uw probleem. Sluit af met een concrete vraag.
+                </p>
+                <div data-role="fieldcontain">
+                    <label for="selField" class="select">waarover gaat het?</label>
+                    <select id="selField" name="selField">
+                        <option value="0">...</option><option value="1">arbeidsrecht</option><option value="2">familierecht en echtscheiding</option><option value="3">ondernemingsrecht</option><option value="4">civiel recht</option><option value="5">sociaal recht</option><option value="6">bestuursrecht</option><option value="7">strafrecht</option><option value="8">anders</option>
+                    </select>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="question">stel uw vraag hier</label>
+                    <textarea cols="40" rows="8" name="question" id="question" maxlength="2000"></textarea>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="name">naam</label>
+                    <input type="text" name="name" id="name" value="" maxlength="50" />
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="email">email adres</label>
+                    <input type="text" name="email" id="email" value="" maxlength="50" />
+                </div>
+                <div class="ui-block-b"><button type="submit" id="btnFeedback" data-theme="a">zenden</button></div>
+            </div>
+        </div>
+        <div id="feedbackDone" data-role="page">
+            <div data-role="header" data-position="fixed" data-tap-toggle="false" class="header">
+                <div data-role="header">
+                    <h1>stel een vraag</h1>
+                </div>
+            </div>
+            <div data-role="content" class="content">
+                <ul class="regular">
+                    <li>Een kopie van uw vraag werd naar uw e-mailadres gestuurd</li>
+                    <li>Uw vraag wordt beantwoord door een ervaren advocaat</li>
+                    <li>Op verstrekking van informatie zijn de regels van geheimhoudingsplicht en verschoningsrecht van toepassing</li>
+                    <li>Uw e-mailadres wordt uitsluitend eenmalig gebruikt voor de beantwoording</li>
+                    <li>Alle gegevens worden na beantwoording vernietigd.</li>
+                    <li>Meer <a href="#node1136">informatie over privacy en geheimhouding vindt u hier</a>.</li>
+                    <li>Indien het antwoord weer vragen oproept adviseren wij een nadere vraag stellen</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</html>
+    

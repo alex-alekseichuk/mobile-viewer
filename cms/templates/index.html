@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advocaten.nl CMS</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="cleditor/css/jquery.cleditor.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="css/custom-theme/jquery-ui-1.10.1.custom.css" rel="stylesheet" />
+    <!--[if IE 7]>
+    <link type="text/css" href="css/custom-theme/jquery.ui.1.10.1.ie.css" rel="stylesheet" />
+    <![endif]-->
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#!/node/0">Advocaten.nl CMS</a>
+                <ul class="nav pull-right">
+                    <li>
+                        <a href="javascript:;" class="active deploy">Deploy</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="alert hide">
+        <button type="button" class="close">×</button>
+        <span></span>
+    </div>
+    <div id="block" class="block">
+    </div>
+</div>
+
+<script src="js/underscore-min.js" type="text/javascript"></script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+<script src="js/backbone-min.js" type="text/javascript"></script>
+<script src="cleditor/js/jquery.cleditor.js" type="text/javascript"></script>
+<script src="cleditor/js/jquery.cleditor.advancedtable.js" type="text/javascript"></script>
+<script src="cleditor/js/jquery.cleditor.xhtml.min.js" type="text/javascript"></script>
+<script src="cleditor/js/jquery.cleditor.embedimg.js" type="text/javascript"></script>
+<script src="js/cms.js" type="text/javascript"></script>
+
+<script type="text/template" id="blankNode">
+    <ol class="breadcrumb">
+        <%
+        if (breadcrumbs) {
+            for (bcId in breadcrumbs) { %>
+                <li>
+                    <a href="#!/node/<%= bcId %>"><%= breadcrumbs[bcId] %></a>
+                    <span class="divider">/</span>
+                </li>
+        <%  }
+        }
+        if (parentId) { %>
+            <li>
+                <a href="#!/node/<%= parentId %>"><%= title %></a>
+                <span class="divider">/</span>
+            </li>
+        <% } %>
+        <li class="active">New node</li>
+    </ol>
+
+    <label for="title">Title</label>
+    <input type="text" class="input-block-level" name="title" id="title" maxlength="50" />
+
+    <div class="well well-small">
+        <label>Type</label>
+        <label class="radio inline" for="type_menu">
+            <input type="radio" value="menu" id="type_menu" name="type" checked="checked">
+            <span>Menu</span>
+        </label>
+        <label class="radio inline" for="type_list">
+            <input type="radio" value="list" id="type_list" name="type">
+            <span>List</span>
+        </label>
+        <label class="radio inline" for="type_page">
+            <input type="radio" value="" id="type_page" name="type">
+            <span>Page</span>
+        </label>
+        <label class="radio inline" for="type_link">
+            <input type="radio" value="link" id="type_link" name="type">
+            <span>Link</span>
+        </label>
+        <label class="radio inline" for="type_root">
+            <input type="radio" value="root" id="type_root" name="type">
+            <span>Home</span>
+        </label>
+        <label class="radio inline" for="type_search">
+            <input type="radio" value="search" id="type_search" name="type">
+            <span>Search</span>
+        </label>
+        <label class="radio inline" for="type_feedback">
+            <input type="radio" value="feedback" id="type_feedback" name="type">
+            <span>Feedback</span>
+        </label>
+    </div>
+
+    <div class="container" id="contentContainer">
+        <label for="text">Text</label>
+        <textarea class="input-block-level" name="text" id="text" rows="5"></textarea>
+        <label for="text">Tags</label>
+        <input type="text" class="input-block-level" name="tags" id="tags" maxlength="1000" value="" />
+    </div>
+
+    <div class="container" id="linkContainer">
+        <label for="text">Link to</label>
+        <select id="linkId"><%= Cms.pages.list() %></select>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="addNode"><i class="icon-ok icon-white"></i> Add</button>
+        <button class="btn" id="back">Cancel</button>
+    </div>
+</script>
+<script type="text/template" id="editNodeItem"><a><%= title %></a></script>
+<script type="text/template" id="editNode">
+    <ol class="breadcrumb">
+        <%
+        if (breadcrumbs) {
+            for (bcId in breadcrumbs) { %>
+        <li>
+            <a href="#!/node/<%= bcId %>"><%= breadcrumbs[bcId] %></a>
+            <span class="divider">/</span>
+        </li>
+        <% }} %>
+        <li class="active"><%= title %></li>
+    </ol>
+
+    <label for="title">Title</label>
+    <input type="text" class="input-block-level" name="title" id="title" maxlength="50" value="<%= title %>" />
+
+    <div class="well well-small">
+        <label>Type</label>
+        <label class="radio inline" for="type_menu">
+            <input type="radio" value="menu" id="type_menu" name="type"<%= 'menu' == type ? ' checked="checked"' : '' %>>
+            <span>Menu</span>
+        </label>
+        <label class="radio inline" for="type_list">
+            <input type="radio" value="list" id="type_list" name="type"<%= 'list' == type ? ' checked="checked"' : '' %>>
+            <span>List</span>
+        </label>
+        <label class="radio inline" for="type_page">
+            <input type="radio" value="" id="type_page" name="type"<%= !type ? ' checked="checked"' : '' %>>
+            <span>Page</span>
+        </label>
+        <label class="radio inline" for="type_link">
+            <input type="radio" value="link" id="type_link" name="type"<%= 'link' == type ? ' checked="checked"' : '' %>>
+            <span>Link</span>
+        </label>
+
+        <label class="radio inline" for="type_root">
+            <input type="radio" value="root" id="type_root" name="type"<%= 'root' == type ? ' checked="checked"' : '' %>>
+            <span>Home</span>
+        </label>
+        <label class="radio inline" for="type_search">
+            <input type="radio" value="search" id="type_search" name="type"<%= 'search' == type ? ' checked="checked"' : '' %>>
+            <span>Search</span>
+        </label>
+        <label class="radio inline" for="type_feedback">
+            <input type="radio" value="feedback" id="type_feedback" name="type"<%= 'feedback' == type ? ' checked="checked"' : '' %>>
+            <span>Feedback</span>
+        </label>
+    </div>
+
+    <div class="container" id="contentContainer">
+        <label for="text">Text</label>
+        <textarea class="input-block-level" name="text" id="text" rows="5"><%= text %></textarea>
+        <label for="text">Tags</label>
+        <input type="text" class="input-block-level" name="tags" id="tags" maxlength="1000" value="<%= tags %>" />
+    </div>
+
+    <div class="container" id="linkContainer">
+        <label for="text">Link to</label>
+        <select id="linkId"><%= Cms.pages.list(linkId) %></select>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary" id="save"><i class="icon-ok icon-white"></i> Save</button>
+        <button class="btn" id="back">Back</button>
+        <button class="btn pull-right btn-danger" id="delete"><i class="icon-remove icon-white"></i> Delete</button>
+    </div>
+
+    <div class="well" id="itemsBox">
+        <h4>Items<button class="btn pull-right btn-primary" id="blankNode"><i class="icon-plus icon-white"></i> Add Item</button></h4>
+    </div>
+
+</script>
+
+</body>
+</html>

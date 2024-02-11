@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <p>
+        {{ node.text|raw }}
+    </p>
+
+    {% if node.items %}
+    <ul>
+        {% for item in node.items %}
+        <li>
+            <a href="{{ item.id }}">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% endblock %}

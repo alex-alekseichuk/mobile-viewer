@@ -1,0 +1,12 @@
+body {
+    color:#333;
+    background-color: #f7f7f7;
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}
+a {
+    color: #4a630f;
+}
+ol.breadcrumb {
+    border: 1px solid #ddd;
+}
